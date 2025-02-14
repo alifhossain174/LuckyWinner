@@ -1,0 +1,68 @@
+.profile-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.avatar-section {
+    margin-bottom: 20px;
+}
+
+.avatar-section img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.avatar-section h2 {
+    margin-top: 4px;
+    font-size: 20px;
+    color: #1e1e1e;
+}
+
+.form-container {
+    background-color: transparent;
+    padding: 0px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    color: #1e1e1e;
+    margin-bottom: 5px;
+    font-weight: 600;
+    padding-left: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: transparent;
+    border: 2px solid #0D0D1F;
+}
+
+.update-button {
+    width: 42%;
+    padding: 12px 15px;
+    background: #0D0D1F;
+    border: none;
+    border-radius: 18px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    color: #39FF14;
+    line-height: 18px;
+    box-shadow: 5px 5px 10px gray;
+}
+
+.update-button:hover {
+    background-color: #0288d1; /* Darker blue on hover */
+}

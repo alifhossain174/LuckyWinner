@@ -1,0 +1,91 @@
+.website_visit_container {
+    width: 100%;
+    overflow: hidden;
+}
+.website_visit_container .header {
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-top: 2px solid silver;
+    border-bottom: 2px solid silver;
+    background: #0D0D1F;
+}
+.website_visit_container .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Ensures full vertical centering */
+    width: 100%; /* Makes sure the content spans the full width */
+    text-align: center; /* Ensures text is centered */
+}
+.website_visit_container .header h1 {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    color: white;
+}
+.website_visit_container .logo {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 5px;
+}
+.website_visit_container .task-list {
+    padding: 15px;
+}
+.website_visit_container .task-card {
+    display: flex;
+    align-items: center;
+    background: #0D0D1F;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.website_visit_container .task-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+}
+.website_visit_container .task-details {
+    flex-grow: 1;
+    color: white;
+}
+.website_visit_container .task-status {
+    font-size: 24px;
+    color: gold;
+}
+.website_visit_container .task-card.completed .task-status {
+    color: #28a745;
+}
+ul.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+ul.pagination li.page-item {
+    list-style: none;
+    border: 1px solid #c0c0c04d;
+    font-size: 14px;
+    background: #3a3a3a6b;
+    color: #fff;
+}
+ul.pagination li.page-item:first-child {
+    border-radius: 4px 0 0 4px;
+}
+ul.pagination li.page-item:last-child {
+    border-radius: 0 4px 4px 0;
+}
+ul.pagination li.active,
+ul.pagination li.disabled {
+    color: #05ff65;
+}
+ul.pagination li.page-item a.page-link {
+    text-decoration: none;
+    color: #fff;
+}
+ul.pagination li.page-item .page-link {
+    display: inline-block;
+    padding: 6px 10px;
+    text-shadow: 1px 1px 1px #000;
+}

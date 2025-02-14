@@ -1,0 +1,142 @@
+.button-container,
+.copy-button {
+    display: flex;
+    align-items: center;
+}
+.button-container {
+    gap: 10px;
+}
+.invite-button {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+}
+.copy-button {
+    height: 40px;
+    justify-content: center;
+}
+.friend-info,
+.invite-section {
+    align-items: center;
+    display: flex;
+}
+.copy-button img {
+    width: 20px;
+    height: 20px;
+}
+.invite-container {
+    width: 95%;
+    margin: auto;
+    padding: 20px 0;
+}
+.invite-container h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.invite-container p {
+    font-size: 14px;
+    padding: 5px 0;
+}
+.invite-box {
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    border-top: 2px solid silver;
+    background-color: #0D0D1F;
+}
+.friend-item,
+.invite-section {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.copy-button,
+.invite-button {
+    background: #343436;
+    color: #fff;
+}
+.invite-section {
+    background-color: #343436;
+    border-radius: 10px;
+}
+.invite-section i {
+    font-size: 26px;
+    margin-right: 16px;
+}
+.friend-info p,
+.invite-section p {
+    font-size: 14px;
+    color: #fff;
+}
+.invite-section span {
+    color: #05ff65;
+}
+.invite-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.copy-button,
+.invite-button {
+    width: 20%;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+}
+.invite-button {
+    text-shadow: 1px 1px 1px #000;
+}
+.friend-list-header {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.friend-list {
+    background-color: #2d2d2d;
+    border-radius: 15px;
+    padding: 10px;
+}
+.friend-item {
+    background: #0D0D1F;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.friend-info img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    border: 1px solid silver;
+    border-radius: 50%;
+}
+.friend-info span {
+    font-size: 12px;
+    color: #05ff65;
+}
+.friend-bonus {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 14px;
+}
+.friend-bonus img {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+.friend-bonus p {
+    margin: 0;
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.rotate-animation {
+    animation: 2s linear infinite rotate;
+    transform-origin: center;
+    display: inline-block;
+}

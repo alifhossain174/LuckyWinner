@@ -1,0 +1,86 @@
+.withdraw-container {
+    border-radius: 20px;
+    padding: 20px;
+    width: 95%;
+    margin: 20px auto auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-top: 2px solid silver;
+    background: #0D0D1F;
+    position: relative;
+}
+.content,
+.invite-button {
+    background-color: #343436;
+}
+.content {
+    padding: 15px;
+    border-radius: 12px;
+    color: #e0e1dd;
+}
+.label {
+    font-weight: 700;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 1px #000;
+}
+.ton-address .address {
+    font-size: 14px;
+    color: #e0e1dd;
+    word-break: break-all;
+}
+.amount,
+.friends-needed {
+    margin-top: 10px;
+}
+.value {
+    color: gold;
+    display: inline-block;
+    font-size: 14px;
+    text-shadow: none;
+}
+.invite-button {
+    color: #fff;
+    border: none;
+    padding: 8px;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+.invite-button:hover {
+    background-color: #0077b6;
+}
+.payments {
+    width: 90%;
+    margin: 20px auto 30px;
+}
+.payments h5 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+.paymentTable {
+    width: 100%;
+    border: 1px solid #fff;
+    border-collapse: collapse;
+}
+.paymentTable tr td {
+    text-align: center;
+    padding: 2px;
+    font-size: 14px;
+}
+label.balanceOption {
+    display: inline-block;
+    width: 78px;
+    background: #bf8800;
+    padding: 2px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px #000;
+    margin-bottom: 5px;
+    margin-right: 2px;
+    color: #1e1e1e;
+    font-weight: 600;
+}
