@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url('assets') }}/css/style.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/toastr.min.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{{ url('assets') }}/css/swiper-bundle.min.css">
 
     @yield('header_css')
 </head>
@@ -82,16 +82,85 @@
     </nav>
 
 
+    <div class="modal" id="modal-community" style="display: none">
+        <div class="modal-content" style="position: relative">
+            <div class="modal-body" style="margin-top: 10px;">
+                <img src="{{url('assets')}}/images/logo.png" style="width: 45px; height: 45px; margin-bottom: 10px" alt="" class="task-logo">
+                <p id="task_title" style="color: white; text-shadow: 1px 1px 2px black;font-size: 18px; font-weight: 600; margin-bottom: 10px;">{{env('APP_NAME')}} - Community</p>
+                <p id="task_description" style="color: white; text-shadow: 1px 1px 2px black; font-size: 14px; margin-bottom: 20px;">Join Our Community</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" onclick="hideCommunityJoinModal()" id="visit-btn" class="visit-btn" style="border-radius: 20px; box-shadow: 2px 2px 5px black; padding: 10px 30px;">Join Now</a>
+            </div>
+        </div>
+    </div>
+
+
     <script src="{{url('assets')}}/js/jquery-3.6.0.min.js"></script>
+    <script src="{{url('assets')}}/js/swiper-bundle.min.js"></script>
     <script src="{{url('assets')}}/js/telegram-web-app.js"></script>
-    <script src="{{url('assets')}}/js/sad.min.js"></script>
+    {{-- <script src="{{url('assets')}}/js/sad.min.js"></script> --}}
     <script>
+
         window.Telegram.WebApp.expand();
+        checkCommunityJoinStatus();
+
+        function checkCommunityJoinStatus(){
+            $.ajax({
+                url: '/check/community/join/status',
+                method: 'GET',
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    if(data.status == false){
+                        $("#modal-community").show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Request failed:', error);
+                }
+            });
+        }
+
+        function hideCommunityJoinModal(){
+            $("#modal-community").hide();
+            window.location.href = "https://t.me/{{env('TELEGRAM_CHANNEL')}}";
+        }
 
         function showLoader(){
             $(".background-blur").show();
             $(".loader").show();
         }
+
+        window.addEventListener("pageshow", function () {
+            $(".background-blur").hide();
+            $(".loader").hide();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const swiper = new Swiper('.finished-rewards', {
+                slidesPerView: 'auto',
+                spaceBetween: 10,
+                freeMode: true,
+                grabCursor: true,
+                touchEventsTarget: 'container',
+                resistance: true,
+                resistanceRatio: 0.85,
+                breakpoints: {
+                    320: {
+                        slidesPerView: 3.1,
+                    },
+                    480: {
+                        slidesPerView: 4.5,
+                    },
+                    768: {
+                        slidesPerView: 5.5,
+                    }
+                }
+            });
+        });
     </script>
 
 
@@ -139,8 +208,8 @@
     @guest
     <script>
 
-        // $(".background-blur").show();
-        // $(".loader").show();
+        $(".background-blur").show();
+        $(".loader").show();
 
         const tg = window.Telegram.WebApp;
         const initData = tg.initDataUnsafe;
@@ -176,38 +245,15 @@
                     console.error('Request failed:', error);
                 }
             });
+        } else  {
+            $(".background-blur").hide();
+            $(".loader").hide();
         }
     </script>
     @endguest
 
 
     @yield('footer_js')
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const swiper = new Swiper('.finished-rewards', {
-                slidesPerView: 'auto',
-                spaceBetween: 10,
-                freeMode: true,
-                grabCursor: true,
-                touchEventsTarget: 'container',
-                resistance: true,
-                resistanceRatio: 0.85,
-                breakpoints: {
-                    320: {
-                        slidesPerView: 3.1,
-                    },
-                    480: {
-                        slidesPerView: 4.5,
-                    },
-                    768: {
-                        slidesPerView: 5.5,
-                    }
-                }
-            });
-        });
-    </script>
 
     <script src="{{ url('assets') }}/js/toastr.min.js"></script>
     {!! Toastr::message() !!}

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class FrontendController extends Controller
 {
@@ -21,7 +23,7 @@ class FrontendController extends Controller
                 return abort(403);
             }
 
-            if($userInfo->image == null){
+            if($userInfo->image == null && env('TELEGRAM_BOT_TOKEN') != ''){
                 $photoUrl = null;
                 $response = file_get_contents("https://api.telegram.org/bot".env('TELEGRAM_BOT_TOKEN')."/getUserProfilePhotos?user_id=$userInfo->refferal_code");
                 $responseData = json_decode($response, true);
@@ -37,9 +39,9 @@ class FrontendController extends Controller
                         $imageContent = file_get_contents($photoUrl);
                         $savePath = public_path('user_images/') . $userInfo->refferal_code . '.jpg'; // Adjust the path as needed
                         file_put_contents($savePath, $imageContent);
+                        $userInfo->image = 'user_images/'.$userInfo->refferal_code.'.jpg';
                     }
                 }
-                $userInfo->image = 'user_images/'.$userInfo->refferal_code.'.jpg';
             }
 
             // if(!$userInfo->last_ad_showed_at){
@@ -82,6 +84,94 @@ class FrontendController extends Controller
     public function wallet(){
         $withdraws = DB::table('with_draws')->where('user_id', 1)->orderBy('id', 'desc')->get();
         return view('wallet', compact('withdraws'));
+    }
+
+    public function checkCommiunityJoinedStatus(){
+
+        if(Auth::user()){
+            $botToken = env('TELEGRAM_BOT_TOKEN');
+            $channelId = '@'.env('TELEGRAM_CHANNEL');
+
+            $response = Http::get("https://api.telegram.org/bot{$botToken}/getChatMember", [
+                'chat_id' => $channelId,
+                'user_id' => Auth::user()->chat_id,
+            ]);
+
+            $data = $response->json();
+            if ($response->successful() && isset($data['result']) && env('TELEGRAM_CHANNEL') != '') {
+
+                $status = $data['result']['status'];
+                if (in_array($status, ['member', 'administrator', 'creator'])) {
+
+                    $userInfo = User::where('id', Auth::user()->id)->first();
+
+                    // if referral bonus has not been distributed before
+                    if($userInfo->ref_refferal_code != null){
+                        $referredUser = User::where('refferal_code', $userInfo->ref_refferal_code)->first();
+                        if($referredUser){
+
+                            // bonus given to reffered user
+                            $referredUser->balance = $userInfo->balance + 0.1;
+                            $referredUser->fixed_balance = $userInfo->fixed_balance + 0.1;
+                            $referredUser->refferal_balance = $userInfo->refferal_balance + 0.1;
+                            $referredUser->save();
+
+                            // bonus given to original user
+                            $userInfo->balance = $userInfo->balance + 0.1;
+                            $userInfo->fixed_balance = $userInfo->fixed_balance + 0.1;
+                            $userInfo->refferal_balance = $userInfo->refferal_balance + 0.1;
+
+                            // sending reffered user a message in telegram about that
+                            Telegram::sendMessage([
+                                'chat_id' => $referredUser->chat_id,
+                                'text' => 'Congratulations! A new user registered using your referral code and has joined our Community! You Have Received 0.1 USDT',
+                                'reply_markup' => json_encode([
+                                    'inline_keyboard' => [
+                                        [
+                                            [
+                                                'text' => 'Open App 🚀',
+                                                'web_app' => ['url' => env('APP_URL')]
+                                            ]
+                                        ],
+                                        [
+                                            [
+                                                'text' => 'Join Community 👥',
+                                                'url' => 'https://t.me/'.env('TELEGRAM_CHANNEL')
+                                            ]
+                                        ]
+                                    ]
+                                ])
+                            ]);
+
+                            // inserting data into this table for referral challange related task
+                            // ReferalHistory::insert([
+                            //     'referal_provided_by' => $referredUser->id,
+                            //     'referal_taken_by' => $userInfo->id,
+                            //     'created_at' => Carbon::now()
+                            // ]);
+
+                        }
+                    }
+
+                    $userInfo->community_joined = 1;
+                    $userInfo->save();
+
+                    return response()->json(['status' => true]);
+                } else {
+
+                    User::where('id', Auth::user()->id)->update([
+                        'community_joined' => 0
+                    ]);
+
+                    return response()->json(['status' => false]);
+                }
+            } else {
+                return response()->json(['status' => true]);
+            }
+        } else {
+            return response()->json(['status' => true]);
+        }
+
     }
 
 }

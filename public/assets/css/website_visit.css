@@ -7,9 +7,13 @@
     text-align: center;
     margin-bottom: 20px;
     margin-top: 10px;
-    border-top: 2px solid silver;
-    border-bottom: 2px solid silver;
-    background: #0D0D1F;
+    border-top: 2px solid orange;
+    border-bottom: 2px solid orange;
+
+    background: #DA4453;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #89216B, #DA4453);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #89216B, #DA4453); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 .website_visit_container .header-content {
     display: flex;
@@ -26,7 +30,7 @@
     color: white;
 }
 .website_visit_container .logo {
-    width: 36px;
+    width: 40px;
     height: 36px;
     margin-bottom: 5px;
 }
@@ -36,7 +40,8 @@
 .website_visit_container .task-card {
     display: flex;
     align-items: center;
-    background: #0D0D1F;
+    background: #B33771;
+
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 10px;
@@ -65,9 +70,9 @@ ul.pagination {
 }
 ul.pagination li.page-item {
     list-style: none;
-    border: 1px solid #c0c0c04d;
+    border: 1px solid pink;
     font-size: 14px;
-    background: #3a3a3a6b;
+    background: #B33771AB;
     color: #fff;
 }
 ul.pagination li.page-item:first-child {
@@ -83,9 +88,17 @@ ul.pagination li.disabled {
 ul.pagination li.page-item a.page-link {
     text-decoration: none;
     color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+    height: 28px;
 }
 ul.pagination li.page-item .page-link {
     display: inline-block;
     padding: 6px 10px;
     text-shadow: 1px 1px 1px #000;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+    height: 28px;
 }

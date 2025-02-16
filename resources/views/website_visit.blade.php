@@ -37,12 +37,12 @@
                     {{-- <img src="{{env('ADMIN_URL').'/'.$taskItem->logo}}" style="width: 25px; height: 25px" alt="" class="task-logo" loading="lazy"> --}}
                     <img src="{{url('assets')}}/images/logo.png" style="width: 25px; height: 25px" alt="" class="task-logo" loading="lazy">
                     <div class="task-details">
-                        <h2 style="font-size: 13px; margin-bottom: 3px;">{{$taskItem->title}}</h2>
+                        <h2 style="font-size: 13px; margin-bottom: 3px; text-shadow: 1px 1px 1px black;">{{$taskItem->title}}</h2>
                         <p style="font-size: 11px; margin: 5px 0px;">{{$taskItem->description}}</p>
-                        <p style="font-size: 13px">USDT +0.1</p>
+                        <p style="font-size: 13px; font-weight: 600;">USDT +0.1</p>
                     </div>
                     <div class="task-status" style="margin-left: 5px" id="task-status-{{$taskItem->id}}">
-                        <a href="javascript:void(0)" onclick="visitWebsite('{{$taskItem->link}}', {{$taskItem->id}})" style="text-decoration: none; color: #05FF65; font-size: 14px; padding: 4px 6px; border: 2px solid #c0c0c07d; border-radius: 4px;">Visit</a>
+                        <a href="javascript:void(0)" onclick="visitWebsite('{{$taskItem->link}}', {{$taskItem->id}})" style="text-decoration: none; color: #05FF65; font-size: 14px; font-weight: 600; padding: 4px 6px; border: 2px dotted white; border-radius: 4px;">Visit</a>
                     </div>
                 </div>
             @endif
@@ -62,6 +62,7 @@
 
 @section('footer_js')
     <script>
+
         function visitWebsite(websiteUrl, websiteId){
 
             $(".background-blur").show();

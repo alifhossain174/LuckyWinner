@@ -13,7 +13,7 @@
         <div class="invite-box">
             <div class="invite-section">
                 <i class="fas fa-gift" style="color: #05FF65;"></i>
-                <p><strong style="display: block; font-size: 16px; margin-bottom: 5px;">Invite a friend</strong><span>10 Dogs</span> for you and your friend. <br><br>Your friend must be need to join our community channel.</p>
+                <p><strong style="display: block; font-size: 16px; margin-bottom: 5px;">Invite a friend</strong><span>0.1 USDT</span> for you and your friend. <br><br>Your friend must be need to join our community channel.</p>
             </div>
             <div class="button-container">
                 @php
@@ -41,16 +41,16 @@
                     @if($referral->image && file_exists(public_path($referral->image)))
                         <img src="{{url($referral->image)}}" alt="" loading="lazy">
                     @else
-                        <img src="{{url('assets')}}/images/dog-icon.png" alt="" loading="lazy"/>
+                        <img src="{{url('assets')}}/images/logo.png" alt="" loading="lazy"/>
                     @endif
 
                     <p>{{ $referral->name }}<br>
                         <span style="color: white">Community Joined: @if($referral->community_joined == 1) <span style="color: #05FF65">Yes</span> @else <span style="color: red">No</span> @endif</span>
-                        <br><span>{{ number_format($referral->balance, 2) }} Dogs</span>
+                        <br><span>{{ number_format($referral->balance, 2) }} USDT</span>
                     </p>
                 </div>
                 <div class="friend-bonus">
-                    <img src="{{url('assets')}}/images/dog-icon.png" alt="" loading="lazy">
+                    <img src="{{url('assets')}}/images/logo.png" alt="" loading="lazy">
                     <p>+10</p>
                 </div>
             </div>
