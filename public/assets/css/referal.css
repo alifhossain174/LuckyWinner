@@ -1,3 +1,4 @@
+
 .button-container,
 .copy-button {
     display: flex;
@@ -31,10 +32,13 @@
 }
 .invite-container h1 {
     font-size: 24px;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
+    color: #B33771;
 }
 .invite-container p {
     font-size: 14px;
+    font-weight: 600;
+    color: #B33771;
     padding: 5px 0;
 }
 .invite-box {
@@ -42,8 +46,8 @@
     padding: 20px;
     margin-bottom: 20px;
     margin-top: 30px;
-    border-top: 2px solid silver;
-    background-color: #0D0D1F;
+    border-top: 2px solid orange;
+    background-color: #B33771;
 }
 .friend-item,
 .invite-section {
@@ -52,11 +56,11 @@
 }
 .copy-button,
 .invite-button {
-    background: #343436;
+    background: #c44569;
     color: #fff;
 }
 .invite-section {
-    background-color: #343436;
+    background-color: #c44569;
     border-radius: 10px;
 }
 .invite-section i {
@@ -96,7 +100,7 @@
     padding: 10px;
 }
 .friend-item {
-    background: #0D0D1F;
+    background: #c44569;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;

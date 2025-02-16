@@ -4,13 +4,13 @@
     width: 95%;
     margin: 20px auto auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    border-top: 2px solid silver;
-    background: #0D0D1F;
+    border-top: 2px solid orange;
+    background-color: #B33771;
     position: relative;
 }
 .content,
 .invite-button {
-    background-color: #343436;
+    background-color: #c44569;
 }
 .content {
     padding: 15px;
@@ -74,7 +74,7 @@
 label.balanceOption {
     display: inline-block;
     width: 78px;
-    background: #bf8800;
+    background: goldenrod;
     padding: 2px 5px;
     border-radius: 4px;
     cursor: pointer;

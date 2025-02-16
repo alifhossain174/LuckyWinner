@@ -23,8 +23,8 @@
 
                 <div class="ton-address">
                     <span class="address">
-                        <span class="label"><img src="{{url('assets')}}/images/binance.png" loading="lazy" style="width: 13px; height: 12px; margin-right: 5px;">Binance ID:</span>
-                        <input type="text" placeholder="Submit Your Binance ID" value="{{$authenticatedUser->wallet_address}}" required name="wallet_address" style="width: 100%;border-radius: 6px; padding: 8px; background: black; border: none; font-size: 14px; color: white; border: 1px solid silver;">
+                        <span class="label"><img src="{{url('assets')}}/images/binance.png" loading="lazy" style="width: 14px; height: 14px; margin-right: 5px;">Binance ID:</span>
+                        <input type="text" placeholder="Submit Your Binance ID" value="{{$authenticatedUser->wallet_address}}" required name="wallet_address" style="width: 100%;border-radius: 6px; padding: 8px; background: #dda6b5a8; border: none; font-size: 14px; color: white; border: 1px solid orange;">
                         <span class="label" style="margin-top: 10px">Withdraw Amount:</span>
 
                         <label class="balanceOption"><input type="radio" name="balance" value="100" @if(count($withdraws) == 0) checked @else disabled @endif> 100</label>
@@ -47,7 +47,7 @@
 
             </div>
 
-            <button type="submit" style="font-size: 16px; padding: 8px; margin-top: 10px; background: #343436; width: 60%; border-radius: 20px" class="invite-button">Withdraw</button>
+            <button type="submit" style="font-size: 16px; padding: 8px; margin-top: 10px; background: #c44569; width: 60%; font-weight: 600; border-radius: 20px" class="invite-button">Withdraw</button>
         </form>
     </div>
 

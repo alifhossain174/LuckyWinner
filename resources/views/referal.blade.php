@@ -30,7 +30,7 @@
         <p class="friend-list-header" style="position: relative">List of your friends
             ({{ App\Models\User::where('ref_refferal_code', $loggedInUserReferralCode)->where('community_joined', 1)->count() }}/{{ count($referrals) }}) <button
                 id="reloadButton"
-                style="position: absolute; top: -1px; left: 92%; background: transparent; border: none; font-size: 18px; cursor:pointer; color: #05FF65;"><span
+                style="position: absolute; top: -1px; left: 92%; background: transparent; border: none; font-size: 18px; cursor:pointer; color: #c44569;"><span
                     class="icon"><i class="fas fa-sync-alt"></i></span></button></p>
 
         @if($referrals && count($referrals) > 0)

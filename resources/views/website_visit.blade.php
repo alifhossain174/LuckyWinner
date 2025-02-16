@@ -7,7 +7,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
     </style>
 @endsection
