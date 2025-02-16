@@ -46,11 +46,11 @@ Route::group(['middleware' => ['auth', 'UserBlockStatus']], function () {
 
     Route::get('user/profile', [FrontendController::class, 'userProfile'])->name('UserProfile')->middleware(['throttle:100,1']);
     Route::post('update/profile', [FrontendController::class, 'updateProfile'])->name('UpdateProfile')->middleware(['throttle:20,1']);
-    Route::get('user/referal', [FrontendController::class, 'userReferal'])->name('UserReferal')->middleware(['throttle:100,1']);
-    Route::get('wallet', [FrontendController::class, 'wallet'])->name('Wallet')->middleware(['throttle:100,1']);
     Route::get('check/community/join/status', [FrontendController::class, 'checkCommiunityJoinedStatus'])->name('CheckCommiunityJoinedStatus');
-
-    Route::get('website/visit/page', [WebsiteVisitController::class, 'wesbiteVisitPage'])->name('ClaimMining')->middleware(['throttle:100,1']);
     Route::post('claim/website/point', [WebsiteVisitController::class, 'claimWebsitePoint'])->name('ClaimWebsitePoint');
 
 });
+
+Route::get('wallet', [FrontendController::class, 'wallet'])->name('Wallet')->middleware(['throttle:100,1']);
+Route::get('user/referal', [FrontendController::class, 'userReferal'])->name('UserReferal')->middleware(['throttle:100,1']);
+Route::get('website/visit/page', [WebsiteVisitController::class, 'wesbiteVisitPage'])->name('ClaimMining')->middleware(['throttle:100,1']);
