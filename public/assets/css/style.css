@@ -221,7 +221,7 @@ img:active {
 
 .giveaway-container .giveaway-amount h5{
     color: white;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     text-shadow: 1px 1px 1px black;
 }
@@ -244,7 +244,7 @@ img:active {
     justify-content: center; /* Centers text vertically */
     position: relative;
     border-radius: 0px 8px 8px 0px;
-    padding-bottom: 24px;
+    /* padding-bottom: 24px; */
 }
 
 .giveaway-container .giveaway-info div {
@@ -256,6 +256,9 @@ img:active {
 }
 
 .giveaway-container .giveaway-info .join-button {
+    display: inline-block;
+    font-size: 13px;
+    text-decoration: none;
     position: absolute;
     bottom: -15px; /* Moves half of the button outside the div */
     left: 60%;

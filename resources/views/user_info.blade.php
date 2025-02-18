@@ -18,7 +18,7 @@
             @endguest
         </div>
     </div>
-    <div class="balance">USDT 0.00</div>
+    <div class="balance">USDT {{ number_format(Auth::user()->balance, 2) ?? 0.00 }}</div>
 </div>
 
 <style>

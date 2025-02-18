@@ -95,6 +95,7 @@ class TelegramController extends Controller
                         'refferal_balance' => 0, //will be given later after community join
                         'refferal_code' => $telegramId,
                         'ref_refferal_code' => $referrerId,
+                        'total_ad_showed' => 0,
                         'created_at' => Carbon::now()
                     ]);
 

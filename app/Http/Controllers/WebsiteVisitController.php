@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class WebsiteVisitController extends Controller
 {
-    public function wesbiteVisitPage(){
+    public function websiteVisitPage(){
         $tasks = DB::table('websites')->orderBy('id', 'desc')->paginate(10);
         $visitedWebsites = DB::table('earnings')->where('user_id', Auth::user()->id)->where('created_at', 'LIKE', date("Y-m-d").'%')->where('website_id', '!=', null)->pluck('website_id')->toArray();
         return view('website_visit', compact('tasks', 'visitedWebsites'));
@@ -23,6 +23,7 @@ class WebsiteVisitController extends Controller
             $userInfo->balance = $userInfo->balance + 0.1;
             $userInfo->fixed_balance = $userInfo->fixed_balance + 0.1;
             $userInfo->website_visit_balance = $userInfo->website_visit_balance + 0.1;
+            $userInfo->total_ad_showed = $userInfo->total_ad_showed + 1;
             $userInfo->save();
 
             DB::table('earnings')->insert([

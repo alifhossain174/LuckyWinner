@@ -228,4 +228,51 @@ class FrontendController extends Controller
 
     }
 
+    public function joinGiveaway($slug){
+        $giveaway = DB::table('giveaways')->where('slug', $slug)->first();
+
+        if(DB::table('giveaway_members')->where('giveaway_id', $giveaway->id)->where('user_id', Auth::user()->id)->exists()){
+            Toastr::error("Already Joined");
+            return back();
+        }
+
+        if($giveaway->type == 2){
+            $totalReferrals = DB::table('users')->where('ref_refferal_code', Auth::user()->refferal_code)->count();
+            $alreadyUsedReferrals = DB::table('giveaway_members')
+                                        ->leftJoin('giveaways', 'giveaway_members.giveaway_id', 'giveaways.id')
+                                        ->where('giveaway_members.giveaway_id', $giveaway->id)
+                                        ->where('giveaway_members.user_id', Auth::user()->id)
+                                        ->where('giveaways.type', 2)
+                                        ->sum('eligibility_count');
+
+            if(($totalReferrals-$alreadyUsedReferrals) < $giveaway->eligibility_count){
+                Toastr::error("More Referral Required");
+                return back();
+            }
+        } else {
+            $alreadyUsedAdsViews = DB::table('giveaway_members')
+                                    ->leftJoin('giveaways', 'giveaway_members.giveaway_id', 'giveaways.id')
+                                    ->where('giveaway_members.giveaway_id', $giveaway->id)
+                                    ->where('giveaway_members.user_id', Auth::user()->id)
+                                    ->where('giveaways.type', 1)
+                                    ->sum('eligibility_count');
+
+            if((Auth::user()->total_ad_showed - $alreadyUsedAdsViews) < $giveaway->eligibility_count){
+                Toastr::error("More Ad Views Required");
+                return back();
+            }
+        }
+
+        DB::table('giveaway_members')->insert([
+            'giveaway_id' => $giveaway->id,
+            'user_id' => Auth::user()->id,
+            'prize_money' => $giveaway->prize_amount,
+            'status' => 0,
+            'created_at' => Carbon::now()
+        ]);
+
+        Toastr::success("Successfully Joined");
+        return back();
+    }
+
 }
