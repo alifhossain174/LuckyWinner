@@ -56,7 +56,17 @@ class FrontendController extends Controller
             $userInfo->save();
         }
 
-        return view('index');
+        $giveawayWinners = DB::table('giveaway_members')
+                            ->leftJoin('users', 'giveaway_members.user_id', 'users.id')
+                            ->select('giveaway_members.*', 'users.name as user_name')
+                            ->orderBy('giveaway_members.id', 'desc')
+                            ->skip(0)
+                            ->limit(20)
+                            ->get();
+
+        $currentGiveways = DB::table('giveaways')->where('status', 1)->get();
+
+        return view('index', compact('giveawayWinners', 'currentGiveways'));
     }
 
     public function userProfile(){

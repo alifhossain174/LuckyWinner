@@ -168,8 +168,13 @@ img:active {
     font-size: 0.8rem;
     color: #888;
     margin-top: 0.5rem;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limits text to 1 line */
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Ensure slides are properly sized */
@@ -177,6 +182,9 @@ img:active {
     width: auto;
     height: auto;
     margin-right: 0px !important;
+}
+.swiper-wrapper{
+    padding-bottom: 6px !important;
 }
 
 /* giveaway css start */
@@ -249,8 +257,8 @@ img:active {
 
 .giveaway-container .giveaway-info .join-button {
     position: absolute;
-    bottom: -16px; /* Moves half of the button outside the div */
-    left: 50%;
+    bottom: -15px; /* Moves half of the button outside the div */
+    left: 60%;
     transform: translateX(-50%); /* Center it horizontally */
 
     background: #c31432;  /* fallback for old browsers */
@@ -258,7 +266,7 @@ img:active {
     background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     color: white;
-    padding: 10px 30px;
+    padding: 8px 15px;
     border: none;
     border-radius: 20px;
     font-weight: bold;

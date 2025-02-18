@@ -12,18 +12,17 @@ class WebsiteVisitController extends Controller
 {
     public function wesbiteVisitPage(){
         $tasks = DB::table('websites')->orderBy('id', 'desc')->paginate(10);
-
-        $visitedWebsites = DB::table('earnings')->where('user_id', 0)->where('created_at', 'LIKE', date("Y-m-d").'%')->where('website_id', '!=', null)->pluck('id')->toArray();
+        $visitedWebsites = DB::table('earnings')->where('user_id', Auth::user()->id)->where('created_at', 'LIKE', date("Y-m-d").'%')->where('website_id', '!=', null)->pluck('website_id')->toArray();
         return view('website_visit', compact('tasks', 'visitedWebsites'));
     }
 
     public function claimWebsitePoint(Request $request){
 
-        if(!DB::table('earnings')->where('user_id', 0)->where('website_id', $request->website_id)->exists()){
-            $userInfo = User::where('id', 1)->first();
+        if(!DB::table('earnings')->where('user_id', Auth::user()->id)->where('website_id', $request->website_id)->exists()){
+            $userInfo = User::where('id', Auth::user()->id)->first();
             $userInfo->balance = $userInfo->balance + 0.1;
             $userInfo->fixed_balance = $userInfo->fixed_balance + 0.1;
-            // $userInfo->mining_balance = $userInfo->mining_balance + 0.1;
+            $userInfo->website_visit_balance = $userInfo->website_visit_balance + 0.1;
             $userInfo->save();
 
             DB::table('earnings')->insert([

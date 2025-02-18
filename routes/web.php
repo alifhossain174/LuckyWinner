@@ -42,9 +42,6 @@ Route::group(['middleware' => ['auth', 'UserBlockStatus']], function () {
     Route::get('wallet', [FrontendController::class, 'wallet'])->name('Wallet')->middleware(['throttle:100,1']);
     Route::post('withdraw/amount', [FrontendController::class, 'withdrawAmount'])->name('WithdrawAmount')->middleware(['throttle:20,1']);
     Route::get('user/referal', [FrontendController::class, 'userReferal'])->name('UserReferal')->middleware(['throttle:100,1']);
+    Route::get('website/visit/page', [WebsiteVisitController::class, 'wesbiteVisitPage'])->name('ClaimMining')->middleware(['throttle:100,1']);
 
 });
-
-
-
-Route::get('website/visit/page', [WebsiteVisitController::class, 'wesbiteVisitPage'])->name('ClaimMining')->middleware(['throttle:100,1']);

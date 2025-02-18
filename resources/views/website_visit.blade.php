@@ -34,8 +34,7 @@
             @if(!in_array($taskItem->id, $visitedWebsites))
                 @php $availableSiteCount++; @endphp
                 <div class="task-card">
-                    {{-- <img src="{{env('ADMIN_URL').'/'.$taskItem->logo}}" style="width: 25px; height: 25px" alt="" class="task-logo" loading="lazy"> --}}
-                    <img src="{{url('assets')}}/images/logo.png" style="width: 25px; height: 25px" alt="" class="task-logo" loading="lazy">
+                    <img src="{{env('ADMIN_URL').'/'.$taskItem->logo}}" style="width: 25px; height: 25px" alt="" class="task-logo" loading="lazy">
                     <div class="task-details">
                         <h2 style="font-size: 13px; margin-bottom: 3px; text-shadow: 1px 1px 1px black;">{{$taskItem->title}}</h2>
                         <p style="font-size: 11px; margin: 5px 0px;">{{$taskItem->description}}</p>
