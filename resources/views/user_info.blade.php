@@ -10,7 +10,7 @@
             </a>
         </div>
         <div class="profile-name">
-            {{ Auth::user()->name ?? 'Mr. Robert Danny' }}
+            {{ Auth::user()->name ?? 'Loading...' }}
             @auth
                 <input type="hidden" id="user_id" value="{{ Auth::user()->id }}">
             @else
@@ -18,9 +18,5 @@
             @endguest
         </div>
     </div>
-    <div class="balance">USDT {{ number_format(Auth::user()->balance, 2) ?? 0.00 }}</div>
+    <div class="balance">USDT {{ Auth::user()->balance ?? 0.00 }}</div>
 </div>
-
-<style>
-
-</style>

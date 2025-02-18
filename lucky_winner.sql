@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2025 at 10:54 PM
+-- Generation Time: Feb 18, 2025 at 05:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,8 @@ CREATE TABLE `earnings` (
 --
 
 INSERT INTO `earnings` (`id`, `user_id`, `website_id`, `reward_id`, `earning_from`, `title`, `points`, `created_at`, `updated_at`) VALUES
-(1, 0, 279, NULL, 3, 'Website Visit', '0.1', '2025-02-14 02:36:46', NULL);
+(1, 0, 279, NULL, 3, 'Website Visit', '0.1', '2025-02-14 02:36:46', NULL),
+(2, 0, 238, NULL, 3, 'Website Visit', '0.1', '2025-02-18 00:48:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -88,8 +89,8 @@ CREATE TABLE `giveaways` (
 --
 
 INSERT INTO `giveaways` (`id`, `title`, `description`, `started_at`, `end_at`, `prize_amount`, `type`, `eligibility_count`, `status`, `slug`, `created_at`, `updated_at`) VALUES
-(4, 'Aliquam non molestia', 'Dolore deserunt nihi', '2025-02-20 00:00', '2025-02-28 23:59', 36, 2, 3, 1, '1739829140RMekB', '2025-02-17 20:52:20', '2025-02-17 20:52:20'),
-(5, 'Elit dolor alias ve', 'Mollitia ad cum fugi', '2025-02-17 12:00:00', '2025-02-26 12:00:59', 91, 1, 86, 1, '1739826470NpAPb', '2025-02-17 20:07:50', NULL);
+(4, 'Aliquam non molestia', 'Dolore deserunt nihi', '2025-02-20 00:00', '2025-02-28 23:59', 36, 2, 1, 1, '1739850446YbLic', '2025-02-18 02:47:26', '2025-02-18 02:47:26'),
+(5, 'Elit dolor alias ve', 'Mollitia ad cum fugi', '2025-02-17 12:00', '2025-02-26 12:00', 91, 1, 86, 1, '1739849069v0h10', '2025-02-18 02:24:29', '2025-02-18 02:24:29');
 
 -- --------------------------------------------------------
 
@@ -106,14 +107,6 @@ CREATE TABLE `giveaway_members` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `giveaway_members`
---
-
-INSERT INTO `giveaway_members` (`id`, `giveaway_id`, `user_id`, `prize_money`, `status`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, 750, 0, '2025-02-17 21:32:06', '2025-02-17 20:51:19'),
-(2, 4, 2, 750, 0, '2025-02-17 21:32:06', '2025-02-17 20:51:43');
 
 -- --------------------------------------------------------
 
@@ -287,6 +280,7 @@ CREATE TABLE `users` (
   `refferal_balance` double NOT NULL DEFAULT 0,
   `website_visit_balance` double NOT NULL DEFAULT 0,
   `community_joined` varchar(255) DEFAULT NULL,
+  `total_ad_showed` double DEFAULT 0,
   `remember_token` varchar(100) DEFAULT NULL,
   `banned` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=>Not Banned; 1=>Banned',
   `banned_day` date DEFAULT NULL,
@@ -299,9 +293,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `image`, `chat_id`, `name`, `email`, `email_verified_at`, `password`, `contact`, `country`, `refferal_code`, `ref_refferal_code`, `wallet_address`, `balance`, `fixed_balance`, `refferal_balance`, `website_visit_balance`, `community_joined`, `remember_token`, `banned`, `banned_day`, `banned_remarks`, `created_at`, `updated_at`) VALUES
-(1, NULL, '123123', 'Admin', 'admin@gmail.com', '2025-02-14 03:35:22', '$2y$12$oHWN0HLlomKGtI9bp503POf.uujhNJmq6bS3M8f3u0PAcrHZYLzEq', '019698854778', 'BD', '12311', NULL, NULL, 0.1, 0.1, 0, 0, '1', NULL, 0, NULL, NULL, NULL, '2025-02-14 02:36:46'),
-(2, NULL, '4564567', 'Normal user', 'user@gmail.com', '2025-02-14 03:35:22', '$2y$12$oHWN0HLlomKGtI9bp503POf.uujhNJmq6bS3M8f3u0PAcrHZYLzEq', '019698854778', 'BD', '12311', NULL, NULL, 0.1, 0.1, 0, 0, '1', NULL, 0, NULL, NULL, NULL, '2025-02-14 02:36:46');
+INSERT INTO `users` (`id`, `image`, `chat_id`, `name`, `email`, `email_verified_at`, `password`, `contact`, `country`, `refferal_code`, `ref_refferal_code`, `wallet_address`, `balance`, `fixed_balance`, `refferal_balance`, `website_visit_balance`, `community_joined`, `total_ad_showed`, `remember_token`, `banned`, `banned_day`, `banned_remarks`, `created_at`, `updated_at`) VALUES
+(1, NULL, '654987', 'Super Admin', 'admin@gmail.com', '2025-02-14 03:35:22', '$2y$12$oHWN0HLlomKGtI9bp503POf.uujhNJmq6bS3M8f3u0PAcrHZYLzEq', '45214587847425', 'UAE', '12311', NULL, '2342342344', 36.2, 36.2, 0, 0.1, '1', 0, NULL, 0, NULL, NULL, NULL, '2025-02-18 00:48:31'),
+(2, NULL, '4564567', 'Normal user', 'user@gmail.com', '2025-02-14 03:35:22', '$2y$12$oHWN0HLlomKGtI9bp503POf.uujhNJmq6bS3M8f3u0PAcrHZYLzEq', '019698854778', 'BD', '12312', '12311', NULL, 0.1, 0.1, 0, 0, '1', 0, NULL, 0, NULL, NULL, NULL, '2025-02-14 02:36:46');
 
 -- --------------------------------------------------------
 
@@ -526,7 +520,8 @@ ALTER TABLE `failed_jobs`
 -- Indexes for table `giveaways`
 --
 ALTER TABLE `giveaways`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `type` (`type`);
 
 --
 -- Indexes for table `giveaway_members`
@@ -610,7 +605,7 @@ ALTER TABLE `with_draws`
 -- AUTO_INCREMENT for table `earnings`
 --
 ALTER TABLE `earnings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -628,7 +623,7 @@ ALTER TABLE `giveaways`
 -- AUTO_INCREMENT for table `giveaway_members`
 --
 ALTER TABLE `giveaway_members`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`

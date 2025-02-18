@@ -229,7 +229,7 @@
                 }),
                 success: function(data) {
 
-                    if(data.status == true){
+                    if(data.status === true){
                         $(".background-blur").hide();
                         $(".loader").hide();
 

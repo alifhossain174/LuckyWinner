@@ -23,7 +23,7 @@ class FrontendController extends Controller
                 return abort(403);
             }
 
-            if($userInfo->image == null && env('TELEGRAM_BOT_TOKEN') != ''){
+            if($userInfo->image == null){
                 $photoUrl = null;
                 $response = file_get_contents("https://api.telegram.org/bot".env('TELEGRAM_BOT_TOKEN')."/getUserProfilePhotos?user_id=$userInfo->refferal_code");
                 $responseData = json_decode($response, true);
