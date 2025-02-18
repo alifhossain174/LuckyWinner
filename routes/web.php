@@ -7,20 +7,10 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\WebsiteVisitController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 // Auth::routes();
 Auth::routes([
-    'login' => true,
+    'login' => false,
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
     'verify' => false, // Email Verification Routes...
@@ -49,8 +39,12 @@ Route::group(['middleware' => ['auth', 'UserBlockStatus']], function () {
     Route::get('check/community/join/status', [FrontendController::class, 'checkCommiunityJoinedStatus'])->name('CheckCommiunityJoinedStatus');
     Route::post('claim/website/point', [WebsiteVisitController::class, 'claimWebsitePoint'])->name('ClaimWebsitePoint');
 
+    Route::get('wallet', [FrontendController::class, 'wallet'])->name('Wallet')->middleware(['throttle:100,1']);
+    Route::post('withdraw/amount', [FrontendController::class, 'withdrawAmount'])->name('WithdrawAmount')->middleware(['throttle:20,1']);
+    Route::get('user/referal', [FrontendController::class, 'userReferal'])->name('UserReferal')->middleware(['throttle:100,1']);
+
 });
 
-Route::get('wallet', [FrontendController::class, 'wallet'])->name('Wallet')->middleware(['throttle:100,1']);
-Route::get('user/referal', [FrontendController::class, 'userReferal'])->name('UserReferal')->middleware(['throttle:100,1']);
+
+
 Route::get('website/visit/page', [WebsiteVisitController::class, 'wesbiteVisitPage'])->name('ClaimMining')->middleware(['throttle:100,1']);

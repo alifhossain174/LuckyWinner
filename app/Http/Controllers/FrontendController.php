@@ -64,7 +64,8 @@ class FrontendController extends Controller
     }
 
     public function updateProfile(Request $request){
-        User::where('id', 1)->update([
+
+        User::where('id', Auth::user()->id)->update([
             'name' => $request->name,
             'email' => $request->email,
             'contact' => $request->phone,
@@ -77,13 +78,56 @@ class FrontendController extends Controller
     }
 
     public function userReferal(){
-        $referrals = User::where('ref_refferal_code', 0)->get();
+        $referrals = User::where('ref_refferal_code', Auth::user()->refferal_code)->get();
         return view('referal', compact('referrals'));
     }
 
     public function wallet(){
-        $withdraws = DB::table('with_draws')->where('user_id', 1)->orderBy('id', 'desc')->get();
-        return view('wallet', compact('withdraws'));
+        $withdraws = DB::table('with_draws')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $webSettings = DB::table('web_settings')->where('id', 1)->first();
+        return view('wallet', compact('withdraws', 'webSettings'));
+    }
+
+    public function withdrawAmount(Request $request){
+
+        $authenticatedUser = Auth::user();
+        User::where('id', $authenticatedUser->id)->update([
+            'wallet_address' => $request->wallet_address,
+        ]);
+
+        if(!$request->balance){
+            Toastr::error("Please select a balance");
+            return back();
+        }
+
+        $webSettings = DB::table('web_settings')->where('id', 1)->first();
+        if($request->balance < $webSettings->minimum_withdraw_points_limit){
+            Toastr::error("Not Allowed");
+            return back();
+        }
+        if($authenticatedUser->balance < $request->balance){
+            Toastr::error("Not Enough Balance");
+            return back();
+        }
+
+        DB::table('with_draws')->insert([
+            'user_id' => $authenticatedUser->id,
+            'trx' => $request->balance,
+            'current_referals' => 0,
+            'payment_title' => "Balance Withdraw",
+            'user_wallet_address' => $request->wallet_address,
+            'status' => 0,
+            'terminal' => mt_rand(1, 3),
+            'created_at' => Carbon::now()
+        ]);
+
+        User::where('id', $authenticatedUser->id)->update([
+            'balance' => $authenticatedUser->balance - $request->balance
+        ]);
+
+        Toastr::success("Withdrawal Request Submitted. Please wait for Approval.");
+        return back();
+
     }
 
     public function checkCommiunityJoinedStatus(){

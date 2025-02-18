@@ -17,7 +17,7 @@
             </div>
             <div class="button-container">
                 @php
-                    $loggedInUserReferralCode = '654ss'; //Auth::user()->refferal_code;
+                    $loggedInUserReferralCode = Auth::user()->refferal_code;
                     $referralLink = 'https://t.me/' . env('TELEGRAM_BOT_USERNAME') . '?start=' . $loggedInUserReferralCode;
                 @endphp
                 <button id="inviteButton" class="invite-button"
@@ -50,8 +50,7 @@
                     </p>
                 </div>
                 <div class="friend-bonus">
-                    <img src="{{url('assets')}}/images/logo.png" alt="" loading="lazy">
-                    <p>+10</p>
+                    <p style="font-size: 16px; color: white;">+0.1</p>
                 </div>
             </div>
         @endforeach

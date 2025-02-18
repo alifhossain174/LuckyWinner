@@ -51,8 +51,8 @@
 }
 .friend-item,
 .invite-section {
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 5px 10px;
+    margin-bottom: 8px;
 }
 .copy-button,
 .invite-button {
@@ -100,7 +100,7 @@
     padding: 10px;
 }
 .friend-item {
-    background: #c44569;
+    background: #B33771;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;

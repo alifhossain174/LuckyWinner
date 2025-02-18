@@ -38,6 +38,7 @@
     display: inline-block;
     font-size: 14px;
     text-shadow: none;
+    font-weight: 600;
 }
 .invite-button {
     color: #fff;
@@ -57,13 +58,14 @@
     margin: 20px auto 30px;
 }
 .payments h5 {
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     margin-bottom: 12px;
+    color: #B33771;
 }
 .paymentTable {
     width: 100%;
-    border: 1px solid #fff;
+    border: 2px solid #B33771;
     border-collapse: collapse;
 }
 .paymentTable tr td {
@@ -74,7 +76,7 @@
 label.balanceOption {
     display: inline-block;
     width: 78px;
-    background: goldenrod;
+    background: #EFA2B4;
     padding: 2px 5px;
     border-radius: 4px;
     cursor: pointer;

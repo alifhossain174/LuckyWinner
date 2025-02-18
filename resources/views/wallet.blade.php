@@ -17,8 +17,7 @@
             @csrf
             <div class="content" style="text-align:left; padding-bottom: 15px; height: auto !important; margin-bottom: 18px; width: 100% !important;">
                 @php
-                    // $authenticatedUser = Auth::user();
-                    $authenticatedUser = App\Models\User::where('id', 1)->first();
+                    $authenticatedUser = Auth::user();
                 @endphp
 
                 <div class="ton-address">
@@ -27,8 +26,8 @@
                         <input type="text" placeholder="Submit Your Binance ID" value="{{$authenticatedUser->wallet_address}}" required name="wallet_address" style="width: 100%;border-radius: 6px; padding: 8px; background: #dda6b5a8; border: none; font-size: 14px; color: white; border: 1px solid orange;">
                         <span class="label" style="margin-top: 10px">Withdraw Amount:</span>
 
-                        <label class="balanceOption"><input type="radio" name="balance" value="100" @if(count($withdraws) == 0) checked @else disabled @endif> 100</label>
-                        <label class="balanceOption"><input type="radio" name="balance" value="1000" @if(count($withdraws) > 0) checked @endif> 1000</label>
+                        <label class="balanceOption"><input type="radio" name="balance" value="100"> 100</label>
+                        <label class="balanceOption"><input type="radio" name="balance" value="1000"> 1000</label>
                         <label class="balanceOption"><input type="radio" name="balance" value="5000"> 5000</label>
                         <label class="balanceOption"><input type="radio" name="balance" value="10000"> 10000</label>
                         <label class="balanceOption"><input type="radio" name="balance" value="25000"> 25000</label>
@@ -42,7 +41,7 @@
                     <span class="label" style="font-weight: 500; font-size: 14px;">Balance : <span class="value">{{$authenticatedUser->balance}}</span></span>
                 </div>
                 <div class="withdrawal_date" >
-                    <span class="label" style="font-weight: 500; font-size: 14px;">Minimum Withdraw Amount : <span class="value">@if(count($withdraws) == 0) 100 @else 1000 @endif</span></span>
+                    <span class="label" style="font-weight: 500; font-size: 14px;">Minimum Withdraw Amount : <span class="value">{{$webSettings->minimum_withdraw_points_limit}}</span></span>
                 </div>
 
             </div>
@@ -65,9 +64,9 @@
         <h5>List of Payment</h5>
         <table class="paymentTable" border="1">
             <tr>
-                <td>Date</td>
-                <td>Amount</td>
-                <td>Status</td>
+                <td style="font-weight: 600; color: #B33771;">Date</td>
+                <td style="font-weight: 600; color: #B33771;">Amount</td>
+                <td style="font-weight: 600; color: #B33771;">Status</td>
             </tr>
             @foreach($withdraws as $withdraw)
             <tr>
@@ -77,7 +76,7 @@
                     @if($withdraw->status == 0)
                     Pending
                     @elseif($withdraw->status == 1)
-                    <span style="color: lightgreen">Approved</span>
+                    <span style="color: green">Approved</span>
                     @else
                     <span style="color: red">Denied</span>
                     @endif
