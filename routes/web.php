@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth', 'UserBlockStatus']], function () {
     Route::post('withdraw/amount', [FrontendController::class, 'withdrawAmount'])->name('WithdrawAmount')->middleware(['throttle:20,1']);
     Route::get('user/referal', [FrontendController::class, 'userReferal'])->name('UserReferal')->middleware(['throttle:100,1']);
     Route::get('website/visit/page', [WebsiteVisitController::class, 'websiteVisitPage'])->name('WebsiteVisitPage')->middleware(['throttle:100,1']);
+
     Route::get('join/giveaway/{slug}', [FrontendController::class, 'joinGiveaway'])->name('JoinGiveaway')->middleware(['throttle:100,1']);
+    Route::post('visit/random/website/for/giveaway', [FrontendController::class, 'visitRandomWebsiteGiveaway'])->name('JoinGiveaway')->middleware(['throttle:100,1']);
 
 });

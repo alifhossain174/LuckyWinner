@@ -23,6 +23,48 @@
 @section('footer_js')
     <script>
 
+        function visitRandomWebsiteForGiveaway(websiteUrl, giveaway_id){
+
+            $(".background-blur").show();
+            $(".loader").show();
+
+            $.ajax({
+                url: '/visit/random/website/for/giveaway',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                data: JSON.stringify({
+                    giveaway_id: giveaway_id
+                }),
+                success: function(response) {
+
+                    $(".background-blur").hide();
+                    $(".loader").hide();
+
+                    let counterElement = document.getElementById("adViewsCount-"+giveaway_id);
+                    let text = counterElement.innerText;
+                    let parts = text.split('/');
+                    let current = parseInt(parts[0]);
+                    let total = parts[1];
+
+                    if (current < total) {
+                        current++;
+                        counterElement.innerText = `${current}/${total}`;
+                    }
+
+                    window.open(websiteUrl, '_blank', 'noopener,noreferrer');
+
+                },
+                error: function(xhr, status, error) {
+                    toastr.error("Something Went Wrong");
+                    return false;
+                }
+            });
+
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             if (window.history && window.history.pushState) {
                 // Simulate that the user is on the home page initially

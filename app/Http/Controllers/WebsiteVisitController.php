@@ -19,11 +19,11 @@ class WebsiteVisitController extends Controller
     public function claimWebsitePoint(Request $request){
 
         if(!DB::table('earnings')->where('user_id', Auth::user()->id)->where('website_id', $request->website_id)->exists()){
+
             $userInfo = User::where('id', Auth::user()->id)->first();
             $userInfo->balance = $userInfo->balance + 0.1;
             $userInfo->fixed_balance = $userInfo->fixed_balance + 0.1;
             $userInfo->website_visit_balance = $userInfo->website_visit_balance + 0.1;
-            $userInfo->total_ad_showed = $userInfo->total_ad_showed + 1;
             $userInfo->save();
 
             DB::table('earnings')->insert([

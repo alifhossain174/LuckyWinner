@@ -13,13 +13,7 @@
             </div>
             @endforeach
         @else
-            <div class="swiper-slide">
-                <div class="reward-card">
-                    <div class="reward-amount">0.0</div>
-                    <div class="reward-currency">USD</div>
-                    <div class="user-tag">user******</div>
-                </div>
-            </div>
+            <h5 style="padding-left: 18px; font-size: 16px; font-weight: 500;">No Winner Found !</h5>
         @endif
 
     </div>

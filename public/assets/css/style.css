@@ -261,7 +261,6 @@ img:active {
     text-decoration: none;
     position: absolute;
     bottom: -15px; /* Moves half of the button outside the div */
-    left: 60%;
     transform: translateX(-50%); /* Center it horizontally */
 
     background: #c31432;  /* fallback for old browsers */
@@ -276,10 +275,26 @@ img:active {
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    width: 90px;
+    text-align: center;
+    left: 81.5%;
 }
 
 .giveaway-container .giveaway-info .join-button:hover {
     background-color: #ff1c1c;
+}
+
+strong.giveaway_ad_view_btn{
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    border: 1px solid white;
+    padding: 4px 8px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #00000082;
+    cursor: pointer;
+    width: 128px;
+    text-align: center;
 }
 /* giveaway css end */
 
