@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{env('APP_NAME')}}</title>
-    <link rel="stylesheet" href="{{ url('assets') }}/css/style.css">
+    <link rel="stylesheet" href="{{ url('assets') }}/css/style-v1.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/toastr.min.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/all.min.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/swiper-bundle.min.css">

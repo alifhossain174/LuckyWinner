@@ -75,8 +75,7 @@
         }
 
         document.getElementById('inviteButton').addEventListener('click', function() {
-            const inviteMessage =
-                "Hey, check out this cool app: https://t.me/{{ env('TELEGRAM_BOT_USERNAME') }}?start={{ $loggedInUserReferralCode }}";
+            const inviteMessage = "Hey, check out this cool app: https://t.me/{{ env('TELEGRAM_BOT_USERNAME') }}?start={{ $loggedInUserReferralCode }}";
             const encodedMessage = encodeURIComponent(inviteMessage); // Encode the message for URL safety
             const telegramShareLink = `https://telegram.me/share/url?url=${encodedMessage}`;
             window.open(telegramShareLink, '_blank');
