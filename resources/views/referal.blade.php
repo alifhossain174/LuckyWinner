@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+
+    @push('user-info')
+    <div class="user-info" id="user_info_render">
+        @include('user_info')
+    </div>
+    @endpush
+
     <div class="invite-container">
 
         <h1>Invite Friends!</h1>

@@ -39,7 +39,7 @@
                                 <span style="color:white" id="adViewsCount-{{$currentGiveway->id}}">{{$memberInfo ? $memberInfo->completed_count : 0}}/{{$currentGiveway->eligibility_count}}</span>
                             </strong>
                         @else
-                            <strong class="giveaway_ad_view_btn" onclick="referralLinkforGiveaway('{{$currentGiveway->slug}}')">
+                            <strong class="giveaway_ad_view_btn" onclick="referralLinkforGiveaway('{{$currentGiveway->slug}}', '{{Auth::user()->chat_id}}')">
                                 <i class="far fa-copy" style="color: gold"></i> Referral:
                                 <span style="color:white">{{$memberInfo ? $memberInfo->completed_count : 0}}/{{$currentGiveway->eligibility_count}}</span>
                             </strong>
@@ -70,8 +70,8 @@
 
     <script>
 
-        function referralLinkforGiveaway(giveawaySlug){
-            const inviteMessage = "Hey, check out this cool app: https://t.me/{{ env('TELEGRAM_BOT_USERNAME') }}?giveaway="+giveawaySlug;
+        function referralLinkforGiveaway(giveawaySlug, chat_id){
+            const inviteMessage = "Hey, check out this cool app: https://t.me/{{ env('TELEGRAM_BOT_USERNAME') }}?start=giveaway_"+giveawaySlug+"_user_"+chat_id;
             const encodedMessage = encodeURIComponent(inviteMessage); // Encode the message for URL safety
             const telegramShareLink = `https://telegram.me/share/url?url=${encodedMessage}`;
             window.open(telegramShareLink, '_blank');

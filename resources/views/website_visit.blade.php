@@ -13,18 +13,25 @@
 @endsection
 
 @section('content')
+
+    @push('user-info')
+    <div class="user-info" id="user_info_render">
+        @include('user_info')
+    </div>
+    @endpush
+
     <div class="website_visit_container">
 
         <!-- Header Section -->
-        <header class="header">
+        {{-- <header class="header">
             <div class="header-content">
                 <img src="{{url('assets')}}/images/logo.png" alt="" class="logo" loading="lazy">
                 <h1 style="font-size: 16px">Website Visit</h1>
             </div>
-        </header>
+        </header> --}}
 
         <!-- Tasks List -->
-        <div class="task-list" style="padding-top: 0px">
+        <div class="task-list" style="padding-top: 20px">
 
             @php
                 $availableSiteCount = 0;

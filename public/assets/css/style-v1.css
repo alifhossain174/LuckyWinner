@@ -90,14 +90,14 @@ img:active {
     border-radius: 50%;
     text-align: center;
     overflow: hidden;
-    line-height: 42px;
     flex-shrink: 0;
 }
 
 .header .profile-icon img {
-    vertical-align: middle;
-    width: 32px;
-    height: 32px;
+    width: 100%; /* Make the image fill the container */
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 50%;
 }
 
 .header .profile-name {

@@ -58,12 +58,97 @@ class TelegramController extends Controller
 
                 } else {
 
+                    // $message = $update['message']['text'] ?? ''; // Get message text
+                    // $params = [];
+
+                    // // Extract query parameters if they exist
+                    // if (strpos($message, '?') !== false) {
+                    //     $urlParts = parse_url($message);
+                    //     if (isset($urlParts['query'])) {
+                    //         parse_str($urlParts['query'], $params);
+                    //     }
+                    // }
+
+                    // // Extract values safely
+                    // $referrerId = $params['start'] ?? null;
+                    // $giveawaySlug = $params['giveaway'] ?? null;
+                    // $userChatId = $params['user'] ?? null;
+
+                    // if($giveawaySlug && $userChatId){
+                    //     $giveaway = DB::table('giveaways')->where('slug', $giveawaySlug)->first();
+                    //     if($giveaway){
+                    //         $userInfoForGiveway = DB::table('users')->where('chat_id', $userChatId)->first();
+                    //         if($userInfoForGiveway){
+                    //             $giveawayMember = DB::table('giveaway_members')->where('giveaway_id', $giveaway->id)->where('user_id', $userInfoForGiveway->id)->first();
+                    //             if(!$giveawayMember){
+                    //                 DB::table('giveaway_members')->insert([
+                    //                     'giveaway_id' => $giveaway->id,
+                    //                     'user_id' => $userInfoForGiveway->id,
+                    //                     'prize_money' => $giveaway->prize_amount,
+                    //                     'required_count' => $giveaway->eligibility_count,
+                    //                     'completed_count' => 1,
+                    //                     'status' => 0,
+                    //                     'created_at' => Carbon::now()
+                    //                 ]);
+                    //             } else {
+                    //                 DB::table('giveaway_members')->where('giveaway_id', $giveaway->id)->where('user_id', $userInfoForGiveway->id)->update([
+                    //                     'completed_count' => $giveawayMember->completed_count + 1,
+                    //                     'updated_at' => Carbon::now()
+                    //                 ]);
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+
+                    // previous approach
                     $message = $update['message']['text'];
                     $referrerId = null;
+                    $giveawaySlug = null;
+                    $userChatId = null;
 
                     if (strpos($message, '/start ') !== false) {
-                        $referrerId = intval(str_replace('/start ', '', $message));
+
+                        $startData = str_replace('/start ', '', $message);
+                        // Check if the start parameter contains encoded giveaway and user data
+                        if (strpos($startData, 'giveaway_') !== false && strpos($startData, '_user_') !== false) {
+                            // Extract giveaway and user ID using explode
+                            $parts = explode('_', $startData);
+                            $giveawaySlug = $parts[1]; // Giveaway ID
+                            $userChatId = $parts[3];     // User ID
+                        } else {
+                            // Fallback for simple referrer ID case
+                            $referrerId = intval($startData);
+                        }
+
                     }
+
+                    if($giveawaySlug && $userChatId){
+                        $giveaway = DB::table('giveaways')->where('slug', $giveawaySlug)->first();
+                        if($giveaway){
+                            $userInfoForGiveway = DB::table('users')->where('chat_id', $userChatId)->first();
+                            if($userInfoForGiveway){
+                                $giveawayMember = DB::table('giveaway_members')->where('giveaway_id', $giveaway->id)->where('user_id', $userInfoForGiveway->id)->first();
+                                if(!$giveawayMember){
+                                    DB::table('giveaway_members')->insert([
+                                        'giveaway_id' => $giveaway->id,
+                                        'user_id' => $userInfoForGiveway->id,
+                                        'prize_money' => $giveaway->prize_amount,
+                                        'required_count' => $giveaway->eligibility_count,
+                                        'completed_count' => 1,
+                                        'status' => 0,
+                                        'created_at' => Carbon::now()
+                                    ]);
+                                } else {
+                                    DB::table('giveaway_members')->where('giveaway_id', $giveaway->id)->where('user_id', $userInfoForGiveway->id)->update([
+                                        'completed_count' => $giveawayMember->completed_count + 1,
+                                        'updated_at' => Carbon::now()
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+
 
                     // telegram profile image
                     $photoUrl = null;

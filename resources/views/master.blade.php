@@ -213,7 +213,7 @@
 
         const tg = window.Telegram.WebApp;
         const initData = tg.initDataUnsafe;
-        const chatId = 6061235335; //initData.user.id;
+        const chatId = initData.user.id;
 
         var userId = $("#user_id").val();
         if (!userId && chatId) {
