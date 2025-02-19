@@ -2,7 +2,18 @@
 <div class="finished-rewards swiper">
     <div class="swiper-wrapper">
 
-        @if(count($giveawayWinners) > 0)
+        @php
+            $giveawayWinners = DB::table('giveaway_members')
+                        ->leftJoin('users', 'giveaway_members.user_id', 'users.id')
+                        ->select('giveaway_members.*', 'users.name as user_name')
+                        ->orderBy('giveaway_members.id', 'desc')
+                        ->where('giveaway_members.status', 1)
+                        ->skip(0)
+                        ->limit(20)
+                        ->get();
+        @endphp
+
+        @if($giveawayWinners && count($giveawayWinners) > 0)
             @foreach ($giveawayWinners as $giveawayWinner)
             <div class="swiper-slide">
                 <div class="reward-card">

@@ -1,6 +1,10 @@
 <div class="section-title">Current Giveaways</div>
 <div class="giveaway-container">
 
+    @php
+        $currentGiveways = DB::table('giveaways')->where('status', 1)->get();
+    @endphp
+
     {{-- loop here --}}
     @if(count($currentGiveways) > 0)
     @foreach ($currentGiveways as $currentGiveway)
@@ -18,27 +22,29 @@
                     <i class="fas fa-users" style="color: gold"></i> {{DB::table('giveaway_members')->where('giveaway_id', $currentGiveway->id)->count()}}
                     <span class="countdown"></span>  <!-- Countdown will be placed here -->
 
-                    @php
-                        $memberInfo = DB::table('giveaway_members')
-                                        ->where('giveaway_id', $currentGiveway->id)
-                                        ->where('user_id', Auth::user()->id)
-                                        ->first();
-                    @endphp
-
-                    @if($currentGiveway->type == 1)
+                    @auth
                         @php
-                            $randomWebsite = DB::table('websites')->inRandomOrder()->first();
+                            $memberInfo = DB::table('giveaway_members')
+                                            ->where('giveaway_id', $currentGiveway->id)
+                                            ->where('user_id', Auth::user()->id)
+                                            ->first();
                         @endphp
-                        <strong class="giveaway_ad_view_btn" onclick="visitRandomWebsiteForGiveaway('{{$randomWebsite->link}}', '{{$currentGiveway->id}}')">
-                            <i class="fas fa-eye" style="color: gold"></i> View Ads:
-                            <span style="color:white" id="adViewsCount-{{$currentGiveway->id}}">{{$memberInfo ? $memberInfo->completed_count : 0}}/{{$currentGiveway->eligibility_count}}</span>
-                        </strong>
-                    @else
-                        <strong class="giveaway_ad_view_btn" onclick="referralLinkforGiveaway('{{$currentGiveway->slug}}')">
-                            <i class="far fa-copy" style="color: gold"></i> Referral:
-                            <span style="color:white">{{$memberInfo ? $memberInfo->completed_count : 0}}/{{$currentGiveway->eligibility_count}}</span>
-                        </strong>
-                    @endif
+
+                        @if($currentGiveway->type == 1)
+                            @php
+                                $randomWebsite = DB::table('websites')->inRandomOrder()->first();
+                            @endphp
+                            <strong class="giveaway_ad_view_btn" onclick="visitRandomWebsiteForGiveaway('{{$randomWebsite->link}}', '{{$currentGiveway->id}}')">
+                                <i class="fas fa-eye" style="color: gold"></i> View Ads:
+                                <span style="color:white" id="adViewsCount-{{$currentGiveway->id}}">{{$memberInfo ? $memberInfo->completed_count : 0}}/{{$currentGiveway->eligibility_count}}</span>
+                            </strong>
+                        @else
+                            <strong class="giveaway_ad_view_btn" onclick="referralLinkforGiveaway('{{$currentGiveway->slug}}')">
+                                <i class="far fa-copy" style="color: gold"></i> Referral:
+                                <span style="color:white">{{$memberInfo ? $memberInfo->completed_count : 0}}/{{$currentGiveway->eligibility_count}}</span>
+                            </strong>
+                        @endif
+                    @endauth
                 </div>
 
                 @auth

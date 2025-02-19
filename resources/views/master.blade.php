@@ -213,10 +213,13 @@
 
         const tg = window.Telegram.WebApp;
         const initData = tg.initDataUnsafe;
-        const chatId = initData.user.id;
+        const chatId = 6061235335; //initData.user.id;
 
         var userId = $("#user_id").val();
         if (!userId && chatId) {
+
+            console.log("Going In");
+
             $.ajax({
                 url: '/store-chat-id',
                 method: 'POST',
@@ -229,13 +232,21 @@
                 }),
                 success: function(data) {
 
-                    if(data.status === true){
+                    console.log(data);
+
+                    if(data.status == true){
                         $(".background-blur").hide();
                         $(".loader").hide();
 
-                        $('#user_info_render').html(data.rendered_user_info);
-                        $('#finished_render').html(data.rendered_finished);
-                        $('#current_render').html(data.rendered_current);
+                        // $('#user_info_render').html(data.rendered_user_info);
+                        // $('#finished_render').html(data.rendered_finished);
+                        // $('#current_render').html(data.rendered_current);
+
+                        setTimeout(() => {
+                            $('#user_info_render').empty().append(data.rendered_user_info);
+                            $('#finished_render').empty().append(data.rendered_finished);
+                            $('#current_render').empty().append(data.rendered_current);
+                        }, 500); // Small delay to ensure elements are available
 
                         checkCommunityJoinStatus();
                     }
