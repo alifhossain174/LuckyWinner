@@ -38,8 +38,6 @@ Route::group(['middleware' => ['auth', 'UserBlockStatus']], function () {
 
     Route::get('user/profile', [FrontendController::class, 'userProfile'])->name('UserProfile')->middleware(['throttle:100,1']);
     Route::post('update/profile', [FrontendController::class, 'updateProfile'])->name('UpdateProfile')->middleware(['throttle:20,1']);
-    Route::get('check/community/join/status', [FrontendController::class, 'checkCommiunityJoinedStatus'])->name('CheckCommiunityJoinedStatus');
-    Route::post('claim/website/point', [WebsiteVisitController::class, 'claimWebsitePoint'])->name('ClaimWebsitePoint');
 
     Route::get('wallet', [FrontendController::class, 'wallet'])->name('Wallet')->middleware(['throttle:100,1']);
     Route::post('withdraw/amount', [FrontendController::class, 'withdrawAmount'])->name('WithdrawAmount')->middleware(['throttle:20,1']);
@@ -50,3 +48,6 @@ Route::group(['middleware' => ['auth', 'UserBlockStatus']], function () {
     Route::post('visit/random/website/for/giveaway', [FrontendController::class, 'visitRandomWebsiteGiveaway'])->name('JoinGiveaway')->middleware(['throttle:100,1']);
 
 });
+
+Route::get('check/community/join/status', [FrontendController::class, 'checkCommiunityJoinedStatus'])->name('CheckCommiunityJoinedStatus');
+Route::post('claim/website/point', [WebsiteVisitController::class, 'claimWebsitePoint'])->name('ClaimWebsitePoint');

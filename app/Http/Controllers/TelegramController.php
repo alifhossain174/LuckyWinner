@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class TelegramController extends Controller
@@ -58,49 +60,6 @@ class TelegramController extends Controller
 
                 } else {
 
-                    // $message = $update['message']['text'] ?? ''; // Get message text
-                    // $params = [];
-
-                    // // Extract query parameters if they exist
-                    // if (strpos($message, '?') !== false) {
-                    //     $urlParts = parse_url($message);
-                    //     if (isset($urlParts['query'])) {
-                    //         parse_str($urlParts['query'], $params);
-                    //     }
-                    // }
-
-                    // // Extract values safely
-                    // $referrerId = $params['start'] ?? null;
-                    // $giveawaySlug = $params['giveaway'] ?? null;
-                    // $userChatId = $params['user'] ?? null;
-
-                    // if($giveawaySlug && $userChatId){
-                    //     $giveaway = DB::table('giveaways')->where('slug', $giveawaySlug)->first();
-                    //     if($giveaway){
-                    //         $userInfoForGiveway = DB::table('users')->where('chat_id', $userChatId)->first();
-                    //         if($userInfoForGiveway){
-                    //             $giveawayMember = DB::table('giveaway_members')->where('giveaway_id', $giveaway->id)->where('user_id', $userInfoForGiveway->id)->first();
-                    //             if(!$giveawayMember){
-                    //                 DB::table('giveaway_members')->insert([
-                    //                     'giveaway_id' => $giveaway->id,
-                    //                     'user_id' => $userInfoForGiveway->id,
-                    //                     'prize_money' => $giveaway->prize_amount,
-                    //                     'required_count' => $giveaway->eligibility_count,
-                    //                     'completed_count' => 1,
-                    //                     'status' => 0,
-                    //                     'created_at' => Carbon::now()
-                    //                 ]);
-                    //             } else {
-                    //                 DB::table('giveaway_members')->where('giveaway_id', $giveaway->id)->where('user_id', $userInfoForGiveway->id)->update([
-                    //                     'completed_count' => $giveawayMember->completed_count + 1,
-                    //                     'updated_at' => Carbon::now()
-                    //                 ]);
-                    //             }
-                    //         }
-                    //     }
-                    // }
-
-
                     // previous approach
                     $message = $update['message']['text'];
                     $referrerId = null;
@@ -150,21 +109,30 @@ class TelegramController extends Controller
                     }
 
 
-                    // telegram profile image
                     $photoUrl = null;
-                    $response = file_get_contents("https://api.telegram.org/bot".env('TELEGRAM_BOT_TOKEN')."/getUserProfilePhotos?user_id=$telegramId");
-                    $responseData = json_decode($response, true);
+
+                    // Fetch user profile photos
+                    $response = Http::get("https://api.telegram.org/bot".env('TELEGRAM_BOT_TOKEN')."/getUserProfilePhotos", [
+                        'user_id' => $telegramId
+                    ]);
+
+                    $responseData = $response->json();
                     if ($responseData['ok'] && $responseData['result']['total_count'] > 0) {
                         $fileId = $responseData['result']['photos'][0][0]['file_id'];
-                        $fileResponse = file_get_contents("https://api.telegram.org/bot".env('TELEGRAM_BOT_TOKEN')."/getFile?file_id=$fileId");
-                        $fileResponseData = json_decode($fileResponse, true);
 
+                        // Fetch file path
+                        $fileResponse = Http::get("https://api.telegram.org/bot".env('TELEGRAM_BOT_TOKEN')."/getFile", [
+                            'file_id' => $fileId
+                        ]);
+
+                        $fileResponseData = $fileResponse->json();
                         if ($fileResponseData['ok']) {
                             $filePath = $fileResponseData['result']['file_path'];
                             $photoUrl = "https://api.telegram.org/file/bot".env('TELEGRAM_BOT_TOKEN')."/$filePath";
 
-                            $imageContent = file_get_contents($photoUrl);
-                            $savePath = public_path('user_images/') . $telegramId . '.jpg'; // Adjust the path as needed
+                            // Download image using cURL
+                            $imageContent = Http::get($photoUrl)->body();
+                            $savePath = public_path('user_images/') . $telegramId . '.jpg';
                             file_put_contents($savePath, $imageContent);
                         }
                     }
@@ -212,6 +180,13 @@ class TelegramController extends Controller
             return response()->json(['status' => 'success']);
 
         } catch (\Exception $e) {
+
+            Log::error('Exception occurred: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 200);
         }
 
