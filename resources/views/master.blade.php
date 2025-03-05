@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{env('APP_NAME')}}</title>
-    <link rel="stylesheet" href="{{ url('assets') }}/css/style-v1.css">
+    <link rel="stylesheet" href="{{ url('assets') }}/css/style-v5.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/toastr.min.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/all.min.css">
     <link rel="stylesheet" href="{{ url('assets') }}/css/swiper-bundle.min.css">
@@ -213,53 +213,57 @@
 
         const tg = window.Telegram.WebApp;
         const initData = tg.initDataUnsafe;
-        const chatId = initData.user.id;
+        if(initData.user){
+            const chatId = initData.user.id;
+            var userId = $("#user_id").val();
+            if (!userId && chatId) {
 
-        var userId = $("#user_id").val();
-        if (!userId && chatId) {
+                console.log("Going In");
 
-            console.log("Going In");
+                $.ajax({
+                    url: '/store-chat-id',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    data: JSON.stringify({
+                        chat_id: chatId
+                    }),
+                    success: function(data) {
 
-            $.ajax({
-                url: '/store-chat-id',
-                method: 'POST',
-                contentType: 'application/json',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                data: JSON.stringify({
-                    chat_id: chatId
-                }),
-                success: function(data) {
+                        console.log(data);
 
-                    console.log(data);
+                        if(data.status == true){
+                            $(".background-blur").hide();
+                            $(".loader").hide();
 
-                    if(data.status == true){
-                        $(".background-blur").hide();
-                        $(".loader").hide();
+                            // $('#user_info_render').html(data.rendered_user_info);
+                            // $('#finished_render').html(data.rendered_finished);
+                            // $('#current_render').html(data.rendered_current);
 
-                        // $('#user_info_render').html(data.rendered_user_info);
-                        // $('#finished_render').html(data.rendered_finished);
-                        // $('#current_render').html(data.rendered_current);
+                            setTimeout(() => {
+                                $('#user_info_render').empty().append(data.rendered_user_info);
+                                $('#finished_render').empty().append(data.rendered_finished);
+                                $('#current_render').empty().append(data.rendered_current);
+                            }, 500); // Small delay to ensure elements are available
 
-                        setTimeout(() => {
-                            $('#user_info_render').empty().append(data.rendered_user_info);
-                            $('#finished_render').empty().append(data.rendered_finished);
-                            $('#current_render').empty().append(data.rendered_current);
-                        }, 500); // Small delay to ensure elements are available
+                            checkCommunityJoinStatus();
+                        }
 
-                        checkCommunityJoinStatus();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Request failed:', error);
                     }
-
-                },
-                error: function(xhr, status, error) {
-                    console.error('Request failed:', error);
-                }
-            });
-        } else  {
-            $(".background-blur").hide();
-            $(".loader").hide();
+                });
+            } else  {
+                $(".background-blur").hide();
+                $(".loader").hide();
+            }
+        } else {
+                window.location.href = "{{env('APP_URL')}}/preview";
         }
+
     </script>
     @endguest
 

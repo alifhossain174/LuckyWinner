@@ -13,6 +13,10 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class FrontendController extends Controller
 {
+    public function preview(){
+        return view('preview');
+    }
+
     public function index(){
 
         if(Auth::user()){

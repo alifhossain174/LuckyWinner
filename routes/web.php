@@ -25,6 +25,7 @@ Route::get('/clear/all', function () {
 
 Route::get('/', [FrontendController::class, 'index'])->name('HomePage');
 Route::get('/webapp', [FrontendController::class, 'index'])->name('Index');
+Route::get('/preview', [FrontendController::class, 'preview'])->name('Preview');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 

@@ -35,7 +35,7 @@
                                 $randomWebsite = DB::table('websites')->inRandomOrder()->first();
                             @endphp
                             <strong class="giveaway_ad_view_btn" onclick="visitRandomWebsiteForGiveaway('{{$randomWebsite->link}}', '{{$currentGiveway->id}}')">
-                                <i class="fas fa-eye" style="color: gold"></i> View Ads:
+                                <i class="fas fa-video" style="color: gold"></i> View Ads:
                                 <span style="color:white" id="adViewsCount-{{$currentGiveway->id}}">{{$memberInfo ? $memberInfo->completed_count : 0}}/{{$currentGiveway->eligibility_count}}</span>
                             </strong>
                         @else
